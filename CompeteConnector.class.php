@@ -12,6 +12,10 @@ class CompeteConnector
 	private $apiKey		= null;
 	private $outputMode	= 'simple'; // choose between 'simple','full','mobile'
 
+	//Tthese are the basic free metrics
+	const TREND_UNIQUE_VISITORS = 'uv';
+	const TREND_UNIQUE_VISITS = 'vis';
+	const TREND_RANK = 'rank';
 
 	/**
 	 * __construct PardotConnector()

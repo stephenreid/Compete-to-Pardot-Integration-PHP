@@ -50,17 +50,17 @@ foreach($prospects as $prospect){
 		//See if the Unique Visitors Entry Exists in our Cache
 		if(array_key_exists($website,$competeResults)){
 			//we already have results
-			$uv = $competeResults[$website];
+			$latestUniqueVisitorsData = $competeResults[$website];
 		} else {
 			//Fetch the Unique Visitors Information from Compete
-			$uv = $compete->query($website,'uv');
+			$uniqueVisitorsDataset = $compete->query($website,CompeteConnector::TREND_UNIQUE_VISITORS);
 			//get the last result
-			$uv = $uv['0']->value;
-			$competeResults[$website]=$uv;
+			$latestUniqueVisitorsData = $uniqueVisitorsDataset['0']->value;
+			$competeResults[$website]=$latestUniqueVisitorsData;
 		}
 
 		//Concatenate the new results on the notes field
-		$prospect['notes'] = $prospect['notes'].' Compete Results:'.$uv;
+		$prospect['notes'] = $prospect['notes'].' Compete Results:'.$latestUniqueVisitorsData;
 		
 		//Send the Updated Prospect Back to Pardot
 		$res = $pardot->prospectUpdate(array(
@@ -75,7 +75,7 @@ foreach($prospects as $prospect){
 			'email'		=>$prospect['email'],
 			'website'	=>$prospect['website'],
 			'company'	=>$prospect['company'],
-			'CompeteResults'=>$uv
+			'CompeteResults'=>$latestUniqueVisitorsData
 		);
 	}
 }
